@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Times Table Practice App</title>
-    <link rel="stylesheet" href="style.css"> <!-- Ensure this points to your CSS file -->
-    <!-- Include any other head elements here -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
@@ -12,17 +11,17 @@
     </header>
 
     <section id="settings">
-        <label for="time-limit">Time Limit (seconds):</label>
-        <input type="number" id="time-limit" min="1" max="60" value="10">
+        <label for="time-limit">Timer:</label>
+        <input type="number" id="time-limit" step="0.1" min="0.1" value="2">
         
-        <label for="min-number">Min Number:</label>
-        <input type="number" id="min-number" min="1" max="10" value="1">
+        <label for="min-number">Min:</label>
+        <input type="number" id="min-number" value="0">
         
-        <label for="max-number">Max Number:</label>
-        <input type="number" id="max-number" min="1" max="10" value="10">
+        <label for="max-number">Max:</label>
+        <input type="number" id="max-number" value="10">
 
-        <label for="session-time">Session Time (minutes):</label>
-        <input type="number" id="session-time" min="1" max="60" value="10">
+        <label for="session-time">Session:</label>
+        <input type="number" id="session-time" min="1" value="5">
     </section>
 
     <main>
@@ -54,6 +53,6 @@
 
     <div id="countdown-overlay" style="display: none;">3</div>
 
-    <script src="script.js"></script> <!-- Ensure this points to your JavaScript file -->
+    <script src="script.js"></script>
 </body>
 </html>

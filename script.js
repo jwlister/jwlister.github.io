@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		void timerElement.offsetWidth; // Trigger reflow
 		timerElement.classList.add('timer-animation');
 
-		let animationDuration = parseInt(timeLimitElement.value) * 1000;
+		let animationDuration = parseFloat(timeLimitElement.value) * 1000;
 		timerElement.style.setProperty('--animation-duration', `${animationDuration / 2}ms`);
 
 		answerTimer = setInterval(function() {
