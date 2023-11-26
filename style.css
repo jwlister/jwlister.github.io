@@ -19,6 +19,17 @@ header {
 #settings input {
     margin-left: 5px;
     margin-right: 15px;
+	width: 50px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	   -webkit-appearance: none;
+		margin: 0;
+}
+
+input[type=number] {
+	-moz-appearance: textfield;
 }
 
 main {
