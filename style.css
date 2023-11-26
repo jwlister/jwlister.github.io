@@ -146,3 +146,33 @@ footer button:hover {
     align-items: center;
     z-index: 10;
 }
+
+/* General styles for better readability on small screens */
+body, input, button, label {
+    font-size: 16px; /* Larger font size for better readability */
+}
+
+/* Responsive styles for different screen sizes */
+@media screen and (max-width: 600px) {
+    /* Adjusting sizes and layouts for small screens */
+    header h1, #settings label, #settings input, #question, #answer, #timer, #score, #start-button {
+        font-size: 18px; /* Even larger font size for very small screens */
+    }
+
+    #settings input, #answer {
+        width: 80%; /* Relative width for better scaling */
+        margin: 10px auto; /* Centering inputs */
+    }
+
+    /* Adjusting layout for settings section */
+    #settings {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* Additional responsive adjustments as needed */
+    /* ... */
+}
+
+/* You can add more media queries for other screen sizes if necessary */
