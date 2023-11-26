@@ -14,10 +14,6 @@
             background-color: #f0f0f0;
         }
           
-        #answer:focus::placeholder {
-        	color: transparent;
-    	}
-          
         #answer:focus {
             caret-color: transparent;
     	}
@@ -42,8 +38,8 @@
         }
         
         #settings table {
-        	width: 100%;
-        	margin: 0 auto;
+        	width: 90%;
+        	margin: 0px auto;
     	}
         
         input::-webkit-outer-spin-button,
@@ -68,74 +64,49 @@
         
         #question {
             font-size: 24px;
-            margin: 20px auto;
+            margin: 5px auto;
+            padding: 0px 0px;
         }
+        
+		.loader {
+			margin: 5px auto;
+			padding: 0px 0px;
+			width: 100px;
+			height: 100px;
+			border-radius: 50%;
+			background: conic-gradient(
+				red 0% 0%,
+				grey 0% 100%
+			);
+		}
         
         #answer {
             font-size: 20px;
-            padding: 0px 5px;
+            margin: 5px auto;
+            padding: 0px 0px;
             width: 34%;
-            margin: 0px auto;
           	text-align: center;
         }
         
-        #timer {
-            <!--height: 50px;-->
-            width: 50px;
-            border-radius: 50%;
-            position: relative;
-            <!--margin: 10px auto;-->
-            background-color: #f44336;
-            overflow: hidden;
-        }
-        
-        #timer::before, #timer::after {
-            content: '';
-            position: absolute;
-            top: 0; right: 0; bottom: 0; left: 0;
-            background-color: #4CAF50;
-            border-radius: 50%;
-            clip: rect(0, 25px, 50px, 0);
-        }
-        
-        #timer::after {
-            transform: rotate(180deg);
-        }
-        
-        .timer-animation::before {
-            animation: leftHalfTimer linear forwards;
-        }
-        
-        .timer-animation::after {
-            animation: rightHalfTimer linear forwards;
-        }
-        
-        @keyframes leftHalfTimer {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(180deg); }
-        }
-        
-        @keyframes rightHalfTimer {
-            0% { transform: rotate(180deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
         #score {
-            margin: 20px 0;
+            margin: 5px 0px;
             font-size: 20px;
         }
         
         #number-pad {
-            margin: 0 auto;
-            width: 200px;
+            margin: 5px auto;
+            width: 300px;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            grid-gap: 10px;
+            grid-gap: 0px;
         }
         
         #number-pad button {
-            padding: 10px;
+      		margin: 0px auto;
+            padding: 0px;
             font-size: 16px;
+			width: 100px;
+			height: 100px;
             background-color: #ddd;
             cursor: pointer;
 			touch-action: manipulation;
@@ -152,6 +123,7 @@
             background-color: #4CAF50;
             color: white;
             cursor: pointer;
+			touch-action: manipulation;
         }
         
         footer button:hover {
@@ -172,11 +144,20 @@
             align-items: center;
             z-index: 10;
         }
+		
+		.backspace-arrow {
+			font-size: 40px;
+      		text-align: center;
+      		line-height: 14px;
+		}
+		
+      	.flash-color {
+    		background-color: #00ff00;
+     	}
     </style>
 </head>
 
 <body>
-
     <main>
         <header>
             <h1>Times Table Practice</h1>
@@ -185,20 +166,21 @@
             <table>
                 <tr>
                     <th><label for="time-limit">Timer</label></th>
-                    <th><label for="min-number">Min</label></th>
-                    <th><label for="max-number">Max</label></th>
+                    <th><label for="number-1">#1</label></th>
+                    <th><label for="number-2">#2</label></th>
                     <th><label for="session-time">Session</label></th>
                 </tr>
                 <tr>
                     <td><input type="number" id="time-limit" step="0.1" min="0.1" value="2"></td>
-                    <td><input type="number" id="min-number" value="0"></td>
-                    <td><input type="number" id="max-number" value="10"></td>
+                    <td><input type="number" id="min-number-1" value="0"><input type="number" id="max-number-1" value="10"></td>
+                    <td><input type="number" id="min-number-2" value="0"><input type="number" id="max-number-2" value="10"></td>
                     <td><input type="number" id="session-time" min="1" value="5"></td>
                 </tr>
             </table>
         </section>
 
         <div id="question"></div>
+        <div id="circularLoader" class="loader"></div>
         <input type="text" id="answer" placeholder="Enter answer">
         <div id="timer" class="timer-animation"></div>
         <div id="score">Correct: 0 / 0</div>
@@ -215,11 +197,11 @@
             <button>9</button>
             <button>C</button>
             <button>0</button>
-            <button>Del</button>
+            <button><span class="backspace-arrow">←</span></button>
         </section>
 
         <footer>
-            <button id="pause-resume">Pause</button>
+            <button id="pause-resume">Resume</button>
             <button id="reset">Reset</button>
         </footer>
     </main>
@@ -235,37 +217,79 @@
             const pauseResumeButton = document.getElementById('pause-resume');
             const resetButton = document.getElementById('reset');
             const timeLimitElement = document.getElementById('time-limit');
-            const minNumberElement = document.getElementById('min-number');
-            const maxNumberElement = document.getElementById('max-number');
+            const minNumber1Element = document.getElementById('min-number-1');
+            const minNumber2Element = document.getElementById('min-number-2');
+            const maxNumber1Element = document.getElementById('max-number-1');
+            const maxNumber2Element = document.getElementById('max-number-2');
             const sessionTimeElement = document.getElementById('session-time');
             let number1, number2, correctAnswer;
             let score = 0, totalAsked = 0;
             let answerTimer, sessionTimer;
             let paused = true;
+			let pieChartInterval;
+			let progress = 0;
+			let updateFrequency = 50;
+			let startTime;
+
+			function startTimer() {
+				startTime = new Date();
+			}
+			
+			function getElapsedTime() {
+				let currentTime = new Date();
+				let elapsedTime = currentTime - startTime;
+				return elapsedTime;
+			}
+
+			function updateProgress(progress) {
+				let loader = document.getElementById('circularLoader');
+				let redAngle = progress * 360;
+				loader.style.background = `conic-gradient(
+					red 0% ${redAngle}deg, 
+					grey ${redAngle}deg 100%
+				)`;
+			}
+			
+			function flashColor() {
+                let element = document.getElementById('answer');
+                element.classList.add('flash-color');
+                setTimeout(function() {
+                    element.classList.remove('flash-color');
+                }, 500);
+            }
         
             function startNewQuestion() {
                 if(paused) return;
-                number1 = getRandomNumber();
-                number2 = getRandomNumber();
+                number1 = getRandomNumber1();
+                number2 = getRandomNumber2();
                 correctAnswer = number1 * number2;
                 questionElement.textContent = `${number1} x ${number2}`;
                 answerElement.value = '';
                 resetTimer();
             }
         
-            function getRandomNumber() {
-                const min = parseInt(minNumberElement.value);
-                const max = parseInt(maxNumberElement.value);
+            function getRandomNumber1() {
+                const min = parseInt(minNumber1Element.value);
+                const max = parseInt(maxNumber1Element.value);
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+			
+			function getRandomNumber2() {
+                const min = parseInt(minNumber2Element.value);
+                const max = parseInt(maxNumber2Element.value);
                 return Math.floor(Math.random() * (max - min + 1)) + min;
             }
         
             function checkAnswer() {
-                if(parseInt(answerElement.value) === correctAnswer) {
-                    score++;
-                }
-                totalAsked++;
-                updateScore();
-                startNewQuestion();
+			    if(answerElement.value.length === correctAnswer.toString().length) {
+					if(parseInt(answerElement.value) === correctAnswer) {
+						score++;
+						flashColor();
+					}
+					totalAsked++;
+					updateScore();
+					startNewQuestion();
+				}
             }
         
             function updateScore() {
@@ -273,24 +297,25 @@
             }
         
         	function resetTimer() {
-        		clearInterval(answerTimer);
-        
-        		// Reset the timer animation
-        		timerElement.classList.remove('timer-animation');
-        		void timerElement.offsetWidth; // Trigger reflow
-        		timerElement.classList.add('timer-animation');
-        
-        		let animationDuration = parseFloat(timeLimitElement.value) * 1000;
-        		timerElement.style.setProperty('--animation-duration', `${animationDuration / 2}ms`);
-        
-        		answerTimer = setInterval(function() {
-        			if (parseInt(answerElement.value) !== correctAnswer) {
-        				totalAsked++;
-        				updateScore();
-        			}
-        			clearInterval(answerTimer);
-        			startNewQuestion();
-        		}, animationDuration);
+				startTimer();
+        		clearInterval(pieChartInterval);
+				
+				let animationDuration = parseFloat(timeLimitElement.value) * 1000;
+        		progress = 0;
+				pieChartInterval = setInterval(function() {
+					progress = getElapsedTime() / animationDuration;
+					updateProgress(progress);
+					
+					if (getElapsedTime() >= animationDuration) {
+						console.log(progress + " progress since the timer started.");
+						if (parseInt(answerElement.value) !== correctAnswer) {
+							totalAsked++;
+							updateScore();
+						}
+						clearInterval(pieChartInterval);
+						startNewQuestion();
+					}
+				}, updateFrequency);
         	}
         
             function pauseGame() {
@@ -330,9 +355,7 @@
             }
         
             answerElement.addEventListener('input', function() {
-                if(answerElement.value.length === correctAnswer.toString().length) {
-                    checkAnswer();
-                }
+				checkAnswer();
             });
         
             document.querySelectorAll('#number-pad button').forEach(button => {
@@ -340,7 +363,7 @@
                     const buttonValue = this.textContent;
                     if (buttonValue === 'C') {
                         clearAnswer();
-                    } else if (buttonValue === 'Del') {
+                    } else if (buttonValue === '←') {
                         deleteLast();
                     } else {
                         enterNumber(buttonValue);
@@ -351,9 +374,7 @@
             function enterNumber(num) {
                 if(paused) return;
                 answerElement.value += num;
-                if(answerElement.value.length === correctAnswer.toString().length) {
-                    checkAnswer();
-                }
+                checkAnswer();
             }
         
             function clearAnswer() {
@@ -375,9 +396,6 @@
                 pauseGame();
                 startNewQuestion();
             });
-        
-            // Initialize the app in a paused state
-            pauseGame();
         });
     </script>
 </body>
