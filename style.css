@@ -147,35 +147,32 @@ footer button:hover {
     z-index: 10;
 }
 
-/* Ensuring the keypad takes the full width of the viewport on mobile devices */
-@media screen and (max-width: 600px) {
-    #number-pad {
-        width: 90%; /* Full width of the viewport */
-        box-sizing: border-box; /* Ensuring padding and borders are included in the width */
-    }
-
-    /* Adjusting the input boxes and labels layout */
-    #settings {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr); /* Four columns for four input groups */
-        gap: 10px; /* Space between grid items */
-        width: 100%; /* Full width */
-        box-sizing: border-box;
-    }
-
-    #settings label, #settings input {
-        width: 100%; /* Full width of their grid column */
-    }
-
-    /* Adjusting overall page layout to fit within viewport height */
-    body, main, header, #settings, #question, #answer, #timer, #score {
-        /* Adjusting sizes and margins to reduce space and fit within the viewport height */
-        margin: 5px 0;
-        padding: 5px;
-        font-size: 14px; /* Smaller font size for compact layout */
-    }
-    
-    header h1 {
-        font-size: 18px; /* Slightly larger font for the header */
-    }
+/* General styles for better readability on small screens */
+body, input, button, label {
+    font-size: 16px; /* Larger font size for better readability */
 }
+
+/* Responsive styles for different screen sizes */
+@media screen and (max-width: 600px) {
+    /* Adjusting sizes and layouts for small screens */
+    header h1, #settings label, #settings input, #question, #answer, #timer, #score, #start-button {
+        font-size: 18px; /* Even larger font size for very small screens */
+    }
+
+    #settings input, #answer {
+        width: 80%; /* Relative width for better scaling */
+        margin: 10px auto; /* Centering inputs */
+    }
+
+    /* Adjusting layout for settings section */
+    #settings {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* Additional responsive adjustments as needed */
+    /* ... */
+}
+
+/* You can add more media queries for other screen sizes if necessary */
