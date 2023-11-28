@@ -6,6 +6,10 @@
     <meta charset="UTF-8">
     <title>Times Table Practice App</title>
     <style>
+        html {
+            overflow: hidden;
+        }
+
         body {
             font-family: Arial, sans-serif;
             text-align: center;
@@ -52,6 +56,7 @@
         }
 
         main {
+            position: relative;
             background-color: #fff;
             margin: 0px auto;
             width: 100%;
@@ -86,6 +91,14 @@
             margin: 0px 0px;
         }
 
+        .buttons {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+        }
+
         #number-pad {
             margin: 2px auto;
             width: 67%;
@@ -101,8 +114,6 @@
             touch-action: manipulation;
             background-color: #efefef;
             max-height: 100%;
-            /* border: unset; */
-            /* border: outset; */
         }
 
         #number-pad button:hover {
@@ -124,18 +135,18 @@
         /* @media (max-aspect-ratio: 1) and (not (min-aspect-ratio: 1)) {
         } */
 
-        footer button {
+        #control-flow button {
             font-size: 16px;
+            color: white;
             background-color: #4CAF50;
             margin-bottom: 2px;
-            color: white;
             cursor: pointer;
             touch-action: manipulation;
             width: 120px;
             height: 40px;
         }
 
-        footer button:hover {
+        #control-flow button:hover {
             background-color: #45A049;
         }
     </style>
@@ -146,6 +157,7 @@
         <header>
             <h1>Times Table Practice</h1>
         </header>
+
         <section id="settings">
             <table>
                 <tr>
@@ -173,28 +185,29 @@
         <div id="answer-timer"></div>
         <div id="question"></div>
         <input type="text" id="answer" placeholder="Enter answer">
-        <section id="number-pad">
-            <button>7</button>
-            <button>8</button>
-            <button>9</button>
-            <button>4</button>
-            <button>5</button>
-            <button>6</button>
-            <button>1</button>
-            <button>2</button>
-            <button>3</button>
-            <button>C</button>
-            <button>0</button>
-            <button><span id="backspace-arrow">←</span></button>
+
+        <section class="buttons">
+            <section id="number-pad">
+                <button>7</button>
+                <button>8</button>
+                <button>9</button>
+                <button>4</button>
+                <button>5</button>
+                <button>6</button>
+                <button>1</button>
+                <button>2</button>
+                <button>3</button>
+                <button>C</button>
+                <button>0</button>
+                <button><span id="backspace-arrow">←</span></button>
+            </section>
+
+            <section id="control-flow">
+                <button id="pause-resume">Resume</button>
+                <button id="reset">Reset</button>
+            </section>
         </section>
-
-        <footer>
-            <button id="pause-resume">Resume</button>
-            <button id="reset">Reset</button>
-        </footer>
     </main>
-
-    <div id="countdown-overlay" style="display: none;">3</div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -295,9 +308,9 @@
                 if (answerElement.value.length === correctAnswer.toString().length) {
                     if (parseInt(answerElement.value) === correctAnswer) {
                         score++;
-                        flashElement("answer", "#00ff00", 200, "transparent");
+                        flashElement("answer", "#00ff00", 500, "transparent");
                     } else {
-                        flashElement("answer", "#ff0000", 200, "transparent");
+                        flashElement("answer", "#ff0000", 500, "transparent");
                     }
                     totalAsked++;
                     updateScore();
@@ -323,7 +336,7 @@
                         if (parseInt(answerElement.value) !== correctAnswer) {
                             totalAsked++;
                             updateScore();
-                            flashElement("answer", "#ff0000", 200, "transparent");
+                            flashElement("answer", "#ff0000", 500, "transparent");
                         }
                         clearInterval(answerTimerInterval);
                         startNewQuestion();
@@ -384,7 +397,6 @@
             });
 
             function reset() {
-                questionElement.textContent = ``;
                 updateAnswerTimerDisplay(0);
                 clearAnswer();
                 clearScore();
