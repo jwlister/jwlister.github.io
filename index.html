@@ -13,109 +13,107 @@
             padding: 0px 0px;
             background-color: #f0f0f0;
         }
-          
+
         #answer:focus {
             caret-color: transparent;
-    	}
-        
+        }
+
         header {
             background-color: #333;
             color: white;
-          	margin: 0px auto;
+            margin: 0px auto;
             padding: 1px 0px;
-          	max-width: 600px;
+            max-width: 600px;
         }
-        
+
         #settings {
             margin: 0px auto;
             padding: 0px 0px;
         }
-        
+
         #settings input {
             margin-left: auto;
             margin-right: auto;
-        	width: 50%;
+            width: 50%;
         }
-        
+
         #settings table {
-        	width: 90%;
-        	margin: 0px auto;
-    	}
-        
+            width: 90%;
+            margin: 0px auto;
+        }
+
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
-        	   -webkit-appearance: none;
-        		margin: 0;
+            -webkit-appearance: none;
+            margin: 0;
         }
-        
+
         input[type=number] {
-        	-moz-appearance: textfield;
+            -moz-appearance: textfield;
         }
-        
+
         main {
             background-color: #fff;
             padding: 0px 0px;
             margin: 0px auto;
             width: 100%;
             max-width: 600px;
-          	min-height: 100vh;
+            min-height: 100vh;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        
+
         #question {
-            font-size: 24px;
+            font-size: 4vmin;
+            margin: 5px auto;
+            width: 34%;
+        }
+
+        #answer-timer {
             margin: 5px auto;
             padding: 0px 0px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: conic-gradient(red 0% 0%,
+                    grey 0% 100%);
         }
-        
-		.loader {
-			margin: 5px auto;
-			padding: 0px 0px;
-			width: 100px;
-			height: 100px;
-			border-radius: 50%;
-			background: conic-gradient(
-				red 0% 0%,
-				grey 0% 100%
-			);
-		}
-        
+
         #answer {
             font-size: 20px;
             margin: 5px auto;
             padding: 0px 0px;
             width: 34%;
-          	text-align: center;
+            text-align: center;
+            background-color: transparent;
+            border-style: solid;
         }
-        
+
         #score {
-            margin: 5px 0px;
-            font-size: 20px;
+            font-size: 4vmin;
+            margin: 5px auto;
+            width: 34%;
         }
-        
+
         #number-pad {
             margin: 5px auto;
-            width: 300px;
+            width: 30vmin;
+            aspect-ratio: 1;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            grid-gap: 0px;
+            grid-gap: 2px;
         }
-        
+
         #number-pad button {
-      		margin: 0px auto;
-            padding: 0px;
             font-size: 16px;
-			width: 100px;
-			height: 100px;
-            background-color: #ddd;
+            /* background-color: #ddd; */
             cursor: pointer;
-			touch-action: manipulation;
+            touch-action: manipulation;
         }
-        
+
         #number-pad button:hover {
             background-color: #ccc;
         }
-        
+
         footer button {
             padding: 10px 20px;
             font-size: 16px;
@@ -123,37 +121,18 @@
             background-color: #4CAF50;
             color: white;
             cursor: pointer;
-			touch-action: manipulation;
+            touch-action: manipulation;
         }
-        
+
         footer button:hover {
             background-color: #45a049;
         }
-        
-        #countdown-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            color: white;
-            font-size: 5em;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10;
+
+        #backspace-arrow {
+            font-size: 26px;
+            text-align: center;
+            line-height: 14px;
         }
-		
-		.backspace-arrow {
-			font-size: 40px;
-      		text-align: center;
-      		line-height: 14px;
-		}
-		
-      	.flash-color {
-    		background-color: #00ff00;
-     	}
     </style>
 </head>
 
@@ -165,39 +144,39 @@
         <section id="settings">
             <table>
                 <tr>
-                    <th><label for="time-limit">Timer</label></th>
-                    <th><label for="number-1">#1</label></th>
-                    <th><label for="number-2">#2</label></th>
-                    <th><label for="session-time">Session</label></th>
+                    <th><label for="answer-time-limit">Timer</label></th>
+                    <th><label for="factor-1">#1</label></th>
+                    <th><label for="factor-2">#2</label></th>
+                    <th><label for="session-duration">Session</label></th>
                 </tr>
                 <tr>
-                    <td><input type="number" id="time-limit" step="0.1" min="0.1" value="2"></td>
-                    <td><input type="number" id="min-number-1" value="0"><input type="number" id="max-number-1" value="10"></td>
-                    <td><input type="number" id="min-number-2" value="0"><input type="number" id="max-number-2" value="10"></td>
-                    <td><input type="number" id="session-time" min="1" value="5"></td>
+                    <td><input type="number" id="answer-time-limit" step="0.1" min="0.1" value="2"></td>
+                    <td><input type="number" id="factor-1-min" value="0"><input type="number" id="factor-1-max"
+                            value="10"></td>
+                    <td><input type="number" id="factor-2-min" value="0"><input type="number" id="factor-2-max"
+                            value="10"></td>
+                    <td><input type="number" id="session-duration" min="1" value="5"></td>
                 </tr>
             </table>
         </section>
 
+        <div id="score">0 / 0</div>
+        <div id="answer-timer"></div>
         <div id="question"></div>
-        <div id="circularLoader" class="loader"></div>
         <input type="text" id="answer" placeholder="Enter answer">
-        <div id="timer" class="timer-animation"></div>
-        <div id="score">Correct: 0 / 0</div>
-
         <section id="number-pad">
-            <button>1</button>
-            <button>2</button>
-            <button>3</button>
-            <button>4</button>
-            <button>5</button>
-            <button>6</button>
             <button>7</button>
             <button>8</button>
             <button>9</button>
+            <button>4</button>
+            <button>5</button>
+            <button>6</button>
+            <button>1</button>
+            <button>2</button>
+            <button>3</button>
             <button>C</button>
             <button>0</button>
-            <button><span class="backspace-arrow">←</span></button>
+            <button><span id="backspace-arrow">←</span></button>
         </section>
 
         <footer>
@@ -209,157 +188,212 @@
     <div id="countdown-overlay" style="display: none;">3</div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const questionElement = document.getElementById('question');
             const answerElement = document.getElementById('answer');
-            const timerElement = document.getElementById('timer');
+            const answerTimerElement = document.getElementById('answer-timer');
             const scoreElement = document.getElementById('score');
             const pauseResumeButton = document.getElementById('pause-resume');
             const resetButton = document.getElementById('reset');
-            const timeLimitElement = document.getElementById('time-limit');
-            const minNumber1Element = document.getElementById('min-number-1');
-            const minNumber2Element = document.getElementById('min-number-2');
-            const maxNumber1Element = document.getElementById('max-number-1');
-            const maxNumber2Element = document.getElementById('max-number-2');
-            const sessionTimeElement = document.getElementById('session-time');
-            let number1, number2, correctAnswer;
+            const answerTimeLimitElement = document.getElementById('answer-time-limit');
+            const factor1MinElement = document.getElementById('factor-1-min');
+            const factor2MinElement = document.getElementById('factor-2-min');
+            const factor1MaxElement = document.getElementById('factor-1-max');
+            const factor2MaxElement = document.getElementById('factor-2-max');
+            const sessionDurationElement = document.getElementById('session-duration');
+            let factor1, factor2, correctAnswer;
             let score = 0, totalAsked = 0;
-            let answerTimer, sessionTimer;
             let paused = true;
-			let pieChartInterval;
-			let progress = 0;
-			let updateFrequency = 50;
-			let startTime;
+            let answerTimerInterval;
+            let progress = 0;
+            let updateFrequency = 50;
+            let answerTimer, sessionTimer;
+            let sessionDuration = parseFloat(sessionDurationElement.value) * 60;
 
-			function startTimer() {
-				startTime = new Date();
-			}
-			
-			function getElapsedTime() {
-				let currentTime = new Date();
-				let elapsedTime = currentTime - startTime;
-				return elapsedTime;
-			}
-
-			function updateProgress(progress) {
-				let loader = document.getElementById('circularLoader');
-				let redAngle = progress * 360;
-				loader.style.background = `conic-gradient(
-					red 0% ${redAngle}deg, 
-					grey ${redAngle}deg 100%
-				)`;
-			}
-			
-			function flashColor() {
-                let element = document.getElementById('answer');
-                element.classList.add('flash-color');
-                setTimeout(function() {
-                    element.classList.remove('flash-color');
-                }, 500);
+            function startAnswerTimer() {
+                answerTimer = new Date();
             }
-        
+
+            function startSessionTimer() {
+                sessionTimer = new Date();
+            }
+
+            function getElapsedTime(timer) {
+                let currentTime = new Date();
+                return currentTime - timer;
+            }
+
+            function updateAnswerTimerDisplay(progress) {
+                let display = document.getElementById('answer-timer');
+                let progressAngle = progress * 360;
+                display.style.background = `conic-gradient(
+					red 0% ${progressAngle}deg, 
+					grey ${progressAngle}deg 100%
+				)`;
+            }
+
+            // function updateSessionTimerDisplay(progress) {
+            //     let display = document.getElementById('session-timer');
+            //     let progressAngle = progress * 360;
+            //     display.style.background = `conic-gradient(
+            // 		red 0% ${progressAngle}deg, 
+            // 		grey ${progressAngle}deg 100%
+            // 	)`;
+            // }
+
+            function flashElement(elementId, color, duration, originalColor) {
+                const element = document.getElementById(elementId);
+
+                if (!element) return;
+
+                element.style.backgroundColor = color;
+                setTimeout(function () {
+                    element.style.backgroundColor = originalColor;
+                }, duration);
+            }
+
             function startNewQuestion() {
-                if(paused) return;
-                number1 = getRandomNumber1();
-                number2 = getRandomNumber2();
-                correctAnswer = number1 * number2;
-                questionElement.textContent = `${number1} x ${number2}`;
-                answerElement.value = '';
+                if (paused) return;
+                factor1 = genFactor1();
+                factor2 = genFactor2();
+                correctAnswer = factor1 * factor2;
+                questionElement.textContent = `${factor1} x ${factor2}`;
+                clearAnswer();
                 resetTimer();
             }
-        
-            function getRandomNumber1() {
-                const min = parseInt(minNumber1Element.value);
-                const max = parseInt(maxNumber1Element.value);
-                return Math.floor(Math.random() * (max - min + 1)) + min;
+
+            function genFactor1() {
+                return genRandomInt(parseInt(factor1MinElement.value), parseInt(factor1MaxElement.value));
             }
-			
-			function getRandomNumber2() {
-                const min = parseInt(minNumber2Element.value);
-                const max = parseInt(maxNumber2Element.value);
-                return Math.floor(Math.random() * (max - min + 1)) + min;
+
+            function genFactor2() {
+                return genRandomInt(parseInt(factor2MinElement.value), parseInt(factor2MaxElement.value));
             }
-        
+
+            function genRandomInt(min, max) {
+                min = Math.ceil(min);
+                max = Math.floor(max);
+                return Math.floor(cryptoRandom() * (max - min + 1)) + min;
+            }
+
+            function cryptoRandom() {
+                const randomBuffer = new Uint32Array(1);
+                window.crypto.getRandomValues(randomBuffer);
+                return randomBuffer[0] / (0xffffffff + 1);
+            }
+
             function checkAnswer() {
-			    if(answerElement.value.length === correctAnswer.toString().length) {
-					if(parseInt(answerElement.value) === correctAnswer) {
-						score++;
-						flashColor();
-					}
-					totalAsked++;
-					updateScore();
-					startNewQuestion();
-				}
+                if (answerElement.value.length === correctAnswer.toString().length) {
+                    if (parseInt(answerElement.value) === correctAnswer) {
+                        score++;
+                        flashElement("answer", "#00ff00", 200, "transparent");
+                    } else {
+                        flashElement("answer", "#ff0000", 200, "transparent");
+                    }
+                    totalAsked++;
+                    updateScore();
+                    startNewQuestion();
+                }
             }
-        
+
             function updateScore() {
-                scoreElement.textContent = `Correct: ${score} / ${totalAsked}`;
+                scoreElement.textContent = `${score} / ${totalAsked}`;
             }
-        
-        	function resetTimer() {
-				startTimer();
-        		clearInterval(pieChartInterval);
-				
-				let animationDuration = parseFloat(timeLimitElement.value) * 1000;
-        		progress = 0;
-				pieChartInterval = setInterval(function() {
-					progress = getElapsedTime() / animationDuration;
-					updateProgress(progress);
-					
-					if (getElapsedTime() >= animationDuration) {
-						console.log(progress + " progress since the timer started.");
-						if (parseInt(answerElement.value) !== correctAnswer) {
-							totalAsked++;
-							updateScore();
-						}
-						clearInterval(pieChartInterval);
-						startNewQuestion();
-					}
-				}, updateFrequency);
-        	}
-        
+
+            function resetTimer() {
+                startAnswerTimer();
+                clearInterval(answerTimerInterval);
+
+                let animationDuration = parseFloat(answerTimeLimitElement.value) * 1000;
+                progress = 0;
+                answerTimerInterval = setInterval(function () {
+                    progress = getElapsedTime(answerTimer) / animationDuration;
+                    updateAnswerTimerDisplay(progress);
+
+                    if (getElapsedTime(answerTimer) >= animationDuration) {
+                        if (parseInt(answerElement.value) !== correctAnswer) {
+                            totalAsked++;
+                            updateScore();
+                            flashElement("answer", "#ff0000", 200, "transparent");
+                        }
+                        clearInterval(answerTimerInterval);
+                        startNewQuestion();
+                    }
+                }, updateFrequency);
+            }
+
             function pauseGame() {
                 paused = true;
-                clearInterval(answerTimer);
+                questionElement.textContent = `Paused`;
+                updateAnswerTimerDisplay(0);
+                clearAnswer();
+                answerElement.disabled = true;
+                answerTimeLimitElement.disabled = false;
+                factor1MinElement.disabled = false;
+                factor1MaxElement.disabled = false;
+                factor2MinElement.disabled = false;
+                factor2MaxElement.disabled = false;
+                sessionDurationElement.disabled = false;
+                clearInterval(answerTimerInterval);
                 clearInterval(sessionTimer);
                 pauseResumeButton.textContent = 'Resume';
             }
-        
+
             function resumeGame() {
                 paused = false;
                 pauseResumeButton.textContent = 'Pause';
-                let countdown = 3;
-                document.getElementById('countdown-overlay').style.display = 'flex';
-                document.getElementById('countdown-overlay').textContent = countdown;
-                const countdownTimer = setInterval(function() {
-                    countdown--;
-                    document.getElementById('countdown-overlay').textContent = countdown;
-                    if(countdown <= 0) {
-                        clearInterval(countdownTimer);
-                        document.getElementById('countdown-overlay').style.display = 'none';
-                        startSessionTimer();
-                        startNewQuestion();
-                    }
-                }, 1000);
+                answerElement.disabled = false;
+                answerTimeLimitElement.disabled = true;
+                factor1MinElement.disabled = true;
+                factor1MaxElement.disabled = true;
+                factor2MinElement.disabled = true;
+                factor2MaxElement.disabled = true;
+                sessionDurationElement.disabled = true;
+                startNewQuestion();
             }
-        
-            function startSessionTimer() {
-                let sessionTime = parseInt(sessionTimeElement.value) * 60;
-                sessionTimer = setInterval(function() {
-                    if(--sessionTime <= 0) {
-                        clearInterval(sessionTimer);
-                        pauseGame();
-                        alert('Session complete!');
-                    }
-                }, 1000);
+
+            function enterNumber(num) {
+                if (paused) return;
+                answerElement.value += num;
+                checkAnswer();
             }
-        
-            answerElement.addEventListener('input', function() {
-				checkAnswer();
+
+            function clearAnswer() {
+                answerElement.value = '';
+            }
+
+            function deleteLast() {
+                answerElement.value = answerElement.value.slice(0, -1);
+            }
+
+            pauseResumeButton.addEventListener('click', function () {
+                paused ? resumeGame() : pauseGame();
             });
-        
+
+            resetButton.addEventListener('click', function () {
+                reset();
+            });
+
+            function reset() {
+                questionElement.textContent = ``;
+                updateAnswerTimerDisplay(0);
+                clearAnswer();
+                clearScore();
+                pauseGame();
+            }
+
+            function clearScore() {
+                score = 0;
+                totalAsked = 0;
+                updateScore();
+            }
+
+            answerElement.addEventListener('input', function () {
+                checkAnswer();
+            });
+
             document.querySelectorAll('#number-pad button').forEach(button => {
-                button.addEventListener('click', function() {
+                button.addEventListener('click', function () {
                     const buttonValue = this.textContent;
                     if (buttonValue === 'C') {
                         clearAnswer();
@@ -370,32 +404,8 @@
                     }
                 });
             });
-        
-            function enterNumber(num) {
-                if(paused) return;
-                answerElement.value += num;
-                checkAnswer();
-            }
-        
-            function clearAnswer() {
-                answerElement.value = '';
-            }
-        
-            function deleteLast() {
-                answerElement.value = answerElement.value.slice(0, -1);
-            }
-        
-            pauseResumeButton.addEventListener('click', function() {
-                paused ? resumeGame() : pauseGame();
-            });
-        
-            resetButton.addEventListener('click', function() {
-                score = 0;
-                totalAsked = 0;
-                updateScore();
-                pauseGame();
-                startNewQuestion();
-            });
+
+            reset();
         });
     </script>
 </body>
