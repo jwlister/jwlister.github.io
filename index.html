@@ -62,7 +62,7 @@
             width: 100%;
             max-width: 600px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            min-height: 86vh;
+            /* min-height: 86vh; */
         }
 
         #question {
@@ -230,6 +230,15 @@
             let updateFrequency = 1000 / 30;
             let answerTimer, sessionTimer;
             let sessionDuration = parseFloat(sessionDurationElement.value) * 60;
+
+            function setElementHeight() {
+                var viewportHeight = window.innerHeight;
+                document.querySelector('main').style.height = viewportHeight + 'px';
+            }
+
+            setElementHeight();
+
+            window.addEventListener('resize', setElementHeight);
 
             function startAnswerTimer() {
                 answerTimer = new Date();
