@@ -28,10 +28,12 @@
         #settings {
             /* background-color: #333; */
             /* border: inset; */
+            margin: 0px auto;
+            width: 100%;
         }
 
         #settings input {
-            width: 30%;
+            width: 25%;
         }
 
         #settings table {
@@ -55,6 +57,7 @@
             width: 100%;
             max-width: 600px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            min-height: 100vh;
         }
 
         #question {
@@ -97,6 +100,7 @@
             cursor: pointer;
             touch-action: manipulation;
             background-color: #efefef;
+            max-height: 100%;
             /* border: unset; */
             /* border: outset; */
         }
@@ -111,7 +115,7 @@
 
         #backspace-arrow {
             font-size: 26px;
-            line-height: 14px;
+            line-height: 10px;
         }
 
         /* @media (min-aspect-ratio: 1) {
@@ -153,12 +157,12 @@
                 <tr>
                     <td><input type="number" id="answer-time-limit" step="0.1" min="0.1" value="4"></td>
                     <td>
-                        <input type="number" id="factor-1-min" value="0"> &ndash; <input type="number" id="factor-1-max"
-                            value="10">
+                        <input type="number" id="factor-1-min" value="0"><span
+                            style="margin: 0px 2px">&ndash;</span><input type="number" id="factor-1-max" value="10">
                     </td>
                     <td>
-                        <input type="number" id="factor-2-min" value="0"> &ndash; <input type="number" id="factor-2-max"
-                            value="10">
+                        <input type="number" id="factor-2-min" value="0"><span
+                            style="margin: 0px 2px">&ndash;</span><input type="number" id="factor-2-max" value="10">
                     </td>
                     <td><input type="number" id="session-duration" min="1" value="5"></td>
                 </tr>
