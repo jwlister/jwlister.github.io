@@ -96,8 +96,8 @@
 
         #number-pad {
             margin: 5px auto;
-            width: 30vmin;
-            aspect-ratio: 1;
+            width: 40vmin;
+            aspect-ratio: 5/3;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             grid-gap: 2px;
@@ -109,6 +109,15 @@
             cursor: pointer;
             touch-action: manipulation;
         }
+
+        #backspace-arrow {
+            font-size: 26px;
+            line-height: 14px;
+        }
+
+        /* #backspace-arrow {
+            line-height: 0px;
+        } */
 
         #number-pad button:hover {
             background-color: #ccc;
@@ -126,12 +135,6 @@
 
         footer button:hover {
             background-color: #45a049;
-        }
-
-        #backspace-arrow {
-            font-size: 26px;
-            text-align: center;
-            line-height: 14px;
         }
     </style>
 </head>
