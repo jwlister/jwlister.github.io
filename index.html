@@ -9,8 +9,7 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            margin: 0px 0px;
-            padding: 0px 0px;
+            margin: auto;
             background-color: #f0f0f0;
         }
 
@@ -27,25 +26,23 @@
         }
 
         #settings {
-            margin: 0px auto;
-            padding: 0px 0px;
+            /* background-color: #333; */
+            /* border: inset; */
         }
 
         #settings input {
-            margin-left: auto;
-            margin-right: auto;
-            width: 50%;
+            width: 30%;
         }
 
         #settings table {
-            width: 90%;
+            width: 100%;
             margin: 0px auto;
         }
 
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
             -webkit-appearance: none;
-            margin: 0;
+            margin: 0px;
         }
 
         input[type=number] {
@@ -54,49 +51,41 @@
 
         main {
             background-color: #fff;
-            padding: 0px 0px;
             margin: 0px auto;
             width: 100%;
             max-width: 600px;
-            min-height: 100vh;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         #question {
-            font-size: 4vmin;
-            margin: 5px auto;
-            width: 34%;
+            font-size: 25px;
+            margin: 0px 0px;
         }
 
         #answer-timer {
-            margin: 5px auto;
-            padding: 0px 0px;
+            margin: 0px auto;
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background: conic-gradient(red 0% 0%,
-                    grey 0% 100%);
         }
 
         #answer {
-            font-size: 20px;
-            margin: 5px auto;
-            padding: 0px 0px;
-            width: 34%;
+            font-size: 25px;
+            width: 200px;
             text-align: center;
             background-color: transparent;
             border-style: solid;
+            margin: 0px 0px;
         }
 
         #score {
-            font-size: 4vmin;
-            margin: 5px auto;
-            width: 34%;
+            font-size: 25px;
+            margin: 0px 0px;
         }
 
         #number-pad {
-            margin: 5px auto;
-            width: 40vmin;
+            margin: 2px auto;
+            width: 67%;
             aspect-ratio: 5/3;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -104,10 +93,20 @@
         }
 
         #number-pad button {
-            font-size: 16px;
-            /* background-color: #ddd; */
+            font-size: 100%;
             cursor: pointer;
             touch-action: manipulation;
+            background-color: #efefef;
+            /* border: unset; */
+            /* border: outset; */
+        }
+
+        #number-pad button:hover {
+            background-color: #ccc;
+        }
+
+        #number-pad button:active {
+            background-color: #bbb;
         }
 
         #backspace-arrow {
@@ -115,26 +114,25 @@
             line-height: 14px;
         }
 
-        /* #backspace-arrow {
-            line-height: 0px;
+        /* @media (min-aspect-ratio: 1) {
         } */
 
-        #number-pad button:hover {
-            background-color: #ccc;
-        }
+        /* @media (max-aspect-ratio: 1) and (not (min-aspect-ratio: 1)) {
+        } */
 
         footer button {
-            padding: 10px 20px;
             font-size: 16px;
-            margin: 20px 10px;
             background-color: #4CAF50;
+            margin-bottom: 2px;
             color: white;
             cursor: pointer;
             touch-action: manipulation;
+            width: 120px;
+            height: 40px;
         }
 
         footer button:hover {
-            background-color: #45a049;
+            background-color: #45A049;
         }
     </style>
 </head>
@@ -147,17 +145,21 @@
         <section id="settings">
             <table>
                 <tr>
-                    <th><label for="answer-time-limit">Timer</label></th>
-                    <th><label for="factor-1">#1</label></th>
-                    <th><label for="factor-2">#2</label></th>
-                    <th><label for="session-duration">Session</label></th>
+                    <th><label for="answer-time-limit">Answer Time Limit (s)</label></th>
+                    <th>Factor 1</th>
+                    <th>Factor 2</th>
+                    <th><label for="session-duration">Session Duration (min)</label></th>
                 </tr>
                 <tr>
-                    <td><input type="number" id="answer-time-limit" step="0.1" min="0.1" value="2"></td>
-                    <td><input type="number" id="factor-1-min" value="0"><input type="number" id="factor-1-max"
-                            value="10"></td>
-                    <td><input type="number" id="factor-2-min" value="0"><input type="number" id="factor-2-max"
-                            value="10"></td>
+                    <td><input type="number" id="answer-time-limit" step="0.1" min="0.1" value="4"></td>
+                    <td>
+                        <input type="number" id="factor-1-min" value="0"> &ndash; <input type="number" id="factor-1-max"
+                            value="10">
+                    </td>
+                    <td>
+                        <input type="number" id="factor-2-min" value="0"> &ndash; <input type="number" id="factor-2-max"
+                            value="10">
+                    </td>
                     <td><input type="number" id="session-duration" min="1" value="5"></td>
                 </tr>
             </table>
@@ -209,7 +211,7 @@
             let paused = true;
             let answerTimerInterval;
             let progress = 0;
-            let updateFrequency = 50;
+            let updateFrequency = 1000 / 30;
             let answerTimer, sessionTimer;
             let sessionDuration = parseFloat(sessionDurationElement.value) * 60;
 
@@ -230,8 +232,8 @@
                 let display = document.getElementById('answer-timer');
                 let progressAngle = progress * 360;
                 display.style.background = `conic-gradient(
-					red 0% ${progressAngle}deg, 
-					grey ${progressAngle}deg 100%
+					#4CAF50 ${progressAngle}deg, 
+					#333 ${progressAngle}deg
 				)`;
             }
 
