@@ -5,150 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
     <title>Times Table Practice App</title>
-    <style>
-        html {
-            overflow: hidden;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: auto;
-            background-color: #f0f0f0;
-        }
-
-        #answer:focus {
-            caret-color: transparent;
-        }
-
-        header {
-            background-color: #333;
-            color: white;
-            margin: 0px auto;
-            padding: 1px 0px;
-            max-width: 600px;
-        }
-
-        #settings {
-            /* background-color: #333; */
-            /* border: inset; */
-            margin: 0px auto;
-            width: 100%;
-        }
-
-        #settings input {
-            width: 25%;
-        }
-
-        #settings table {
-            width: 100%;
-            margin: 0px auto;
-        }
-
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0px;
-        }
-
-        input[type=number] {
-            -moz-appearance: textfield;
-        }
-
-        main {
-            position: relative;
-            background-color: #fff;
-            margin: 0px auto;
-            width: 100%;
-            max-width: 600px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            /* min-height: 86vh; */
-        }
-
-        #question {
-            font-size: 25px;
-            margin: 0px 0px;
-        }
-
-        #answer-timer {
-            margin: 0px auto;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-        }
-
-        #answer {
-            font-size: 25px;
-            width: 200px;
-            text-align: center;
-            background-color: transparent;
-            border-style: solid;
-            margin: 0px 0px;
-        }
-
-        #score {
-            font-size: 25px;
-            margin: 0px 0px;
-        }
-
-        .buttons {
-            position: absolute;
-            bottom: 2px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-        }
-
-        #number-pad {
-            margin: 2px auto;
-            width: 67%;
-            aspect-ratio: 4/3;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-gap: 2px;
-        }
-
-        #number-pad button {
-            font-size: 100%;
-            cursor: pointer;
-            touch-action: manipulation;
-            background-color: #efefef;
-            max-height: 100%;
-        }
-
-        #number-pad button:hover {
-            background-color: #ccc;
-        }
-
-        #number-pad button:active {
-            background-color: #bbb;
-        }
-
-        #backspace-arrow {
-            font-size: 26px;
-            line-height: 10px;
-        }
-
-        /* @media (min-aspect-ratio: 1) {
-        } */
-
-        /* @media (max-aspect-ratio: 1) and (not (min-aspect-ratio: 1)) {
-        } */
-
-        #control-flow button {
-            font-size: 16px;
-            color: white;
-            background-color: #4CAF50;
-            cursor: pointer;
-            touch-action: manipulation;
-            width: 120px;
-            height: 40px;
-        }
-
-        #control-flow button:hover {
-            background-color: #45A049;
-        }
-    </style>
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -157,286 +15,89 @@
             <h1>Times Table Practice</h1>
         </header>
 
-        <section id="settings">
-            <table>
+        <div class="settings">
+            <table class="settings-table">
                 <tr>
                     <th><label for="answer-time-limit">Answer Time Limit (s)</label></th>
-                    <th>Factor 1</th>
-                    <th>Factor 2</th>
-                    <th><label for="session-duration">Session Duration (min)</label></th>
+                    <th>Factor 1 Range</th>
+                    <th>Factor 2 Range</th>
+                    <th><label for="session-duration">Session Length</label></th>
                 </tr>
                 <tr>
-                    <td><input type="number" id="answer-time-limit" step="0.1" min="0.1" value="4"></td>
+                    <td><input type="number" id="answer-time-limit" step="0.1" min="0.1" value="1"></td>
                     <td>
-                        <input type="number" id="factor-1-min" value="0"><span
-                            style="margin: 0px 2px">&ndash;</span><input type="number" id="factor-1-max" value="10">
+                        <input type="number" id="factor-1-min" value="2"><span
+                            style="margin: 0px 2px">&ndash;</span><input type="number" id="factor-1-max" value="13">
                     </td>
                     <td>
-                        <input type="number" id="factor-2-min" value="0"><span
-                            style="margin: 0px 2px">&ndash;</span><input type="number" id="factor-2-max" value="10">
+                        <input type="number" id="factor-2-min" value="2"><span
+                            style="margin: 0px 2px">&ndash;</span><input type="number" id="factor-2-max" value="13">
                     </td>
-                    <td><input type="number" id="session-duration" min="1" value="5"></td>
+                    <td>
+                        <table class="settings-session-table">
+                            <tr>
+                                <td>
+                                    <input type="radio" id="session-length-time-radio" name="session-length-type"
+                                        value="time">
+                                </td>
+                                <td>
+                                    <input type="radio" id="session-length-count-radio" name="session-length-type"
+                                        value="count" checked>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><label for="session-length-time">Minutes</label></th>
+                                <th><label for="session-length-count">Questions</label></th>
+                            </tr>
+                            <tr>
+                                <td><input type="number" id="session-length-time" min="1" value="5"></td>
+                                <td><input type="number" id="session-length-count" min="60" value="300"></td>
+                            </tr>
+                        </table>
+                    </td>
+
                 </tr>
             </table>
-        </section>
+        </div>
 
-        <div id="score">0 / 0</div>
-        <div id="answer-timer"></div>
-        <div id="question"></div>
-        <input type="text" id="answer" placeholder="Enter answer">
+        <div class="answer-section">
+            <div id="score">0 / 0</div>
+            <div id="answer-timer"></div>
+            <div id="question"></div>
+            <input type="text" id="answer" placeholder="Enter answer">
+        </div>
 
-        <section class="buttons">
-            <section id="control-flow">
-                <button id="pause-resume">Resume</button>
-                <button id="reset">Reset</button>
-            </section>
+        <div class="control-panel-bounds">
+            <div class="control-panel">
+                <div class="control-flow-buttons">
+                    <button id="pause-resume">Resume</button>
+                    <button id="reset">Reset</button>
+                </div>
 
-            <section id="number-pad">
-                <button>7</button>
-                <button>8</button>
-                <button>9</button>
-                <button>4</button>
-                <button>5</button>
-                <button>6</button>
-                <button>1</button>
-                <button>2</button>
-                <button>3</button>
-                <button>C</button>
-                <button>0</button>
-                <button><span id="backspace-arrow">←</span></button>
-            </section>
-        </section>
+                <div class="numpad">
+                    <button>7</button>
+                    <button>8</button>
+                    <button>9</button>
+                    <button>4</button>
+                    <button>5</button>
+                    <button>6</button>
+                    <button>1</button>
+                    <button>2</button>
+                    <button>3</button>
+                    <button>C</button>
+                    <button>0</button>
+                    <button><span id="backspace-arrow">←</span></button>
+                    <!-- <button><svg width="50" height="14" viewBox="0 0 50 14" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M 30 10 L 10 25 L 30 40 M 10 25 L 100 25" stroke="black" stroke-width="4"
+                            fill="none" />
+                    </svg>
+                </button> -->
+                </div>
+            </div>
+        </div>
     </main>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const questionElement = document.getElementById('question');
-            const answerElement = document.getElementById('answer');
-            const answerTimerElement = document.getElementById('answer-timer');
-            const scoreElement = document.getElementById('score');
-            const pauseResumeButton = document.getElementById('pause-resume');
-            const resetButton = document.getElementById('reset');
-            const answerTimeLimitElement = document.getElementById('answer-time-limit');
-            const factor1MinElement = document.getElementById('factor-1-min');
-            const factor2MinElement = document.getElementById('factor-2-min');
-            const factor1MaxElement = document.getElementById('factor-1-max');
-            const factor2MaxElement = document.getElementById('factor-2-max');
-            const sessionDurationElement = document.getElementById('session-duration');
-            let factor1, factor2, correctAnswer;
-            let score = 0, totalAsked = 0;
-            let paused = true;
-            let answerTimerInterval;
-            let progress = 0;
-            let updateFrequency = 1000 / 30;
-            let answerTimer, sessionTimer;
-            let sessionDuration = parseFloat(sessionDurationElement.value) * 60;
-
-            function setElementHeight() {
-                var viewportHeight = window.innerHeight;
-                document.querySelector('main').style.height = viewportHeight + 'px';
-            }
-
-            setElementHeight();
-
-            window.addEventListener('resize', setElementHeight);
-
-            function startAnswerTimer() {
-                answerTimer = new Date();
-            }
-
-            function startSessionTimer() {
-                sessionTimer = new Date();
-            }
-
-            function getElapsedTime(timer) {
-                let currentTime = new Date();
-                return currentTime - timer;
-            }
-
-            function updateAnswerTimerDisplay(progress) {
-                let display = document.getElementById('answer-timer');
-                let progressAngle = progress * 360;
-                display.style.background = `conic-gradient(
-					#4CAF50 ${progressAngle}deg, 
-					#333 ${progressAngle}deg
-				)`;
-            }
-
-            // function updateSessionTimerDisplay(progress) {
-            //     let display = document.getElementById('session-timer');
-            //     let progressAngle = progress * 360;
-            //     display.style.background = `conic-gradient(
-            // 		red 0% ${progressAngle}deg, 
-            // 		grey ${progressAngle}deg 100%
-            // 	)`;
-            // }
-
-            function flashElement(elementId, color, duration, originalColor) {
-                const element = document.getElementById(elementId);
-
-                if (!element) return;
-
-                element.style.backgroundColor = color;
-                setTimeout(function () {
-                    element.style.backgroundColor = originalColor;
-                }, duration);
-            }
-
-            function startNewQuestion() {
-                if (paused) return;
-                factor1 = genFactor1();
-                factor2 = genFactor2();
-                correctAnswer = factor1 * factor2;
-                questionElement.textContent = `${factor1} x ${factor2}`;
-                clearAnswer();
-                resetTimer();
-            }
-
-            function genFactor1() {
-                return genRandomInt(parseInt(factor1MinElement.value), parseInt(factor1MaxElement.value));
-            }
-
-            function genFactor2() {
-                return genRandomInt(parseInt(factor2MinElement.value), parseInt(factor2MaxElement.value));
-            }
-
-            function genRandomInt(min, max) {
-                min = Math.ceil(min);
-                max = Math.floor(max);
-                return Math.floor(cryptoRandom() * (max - min + 1)) + min;
-            }
-
-            function cryptoRandom() {
-                const randomBuffer = new Uint32Array(1);
-                window.crypto.getRandomValues(randomBuffer);
-                return randomBuffer[0] / (0xffffffff + 1);
-            }
-
-            function checkAnswer() {
-                if (answerElement.value.length === correctAnswer.toString().length) {
-                    if (parseInt(answerElement.value) === correctAnswer) {
-                        score++;
-                        flashElement("answer", "#00ff00", 500, "transparent");
-                    } else {
-                        flashElement("answer", "#ff0000", 500, "transparent");
-                    }
-                    totalAsked++;
-                    updateScore();
-                    startNewQuestion();
-                }
-            }
-
-            function updateScore() {
-                scoreElement.textContent = `${score} / ${totalAsked}`;
-            }
-
-            function resetTimer() {
-                startAnswerTimer();
-                clearInterval(answerTimerInterval);
-
-                let animationDuration = parseFloat(answerTimeLimitElement.value) * 1000;
-                progress = 0;
-                answerTimerInterval = setInterval(function () {
-                    progress = getElapsedTime(answerTimer) / animationDuration;
-                    updateAnswerTimerDisplay(progress);
-
-                    if (getElapsedTime(answerTimer) >= animationDuration) {
-                        if (parseInt(answerElement.value) !== correctAnswer) {
-                            totalAsked++;
-                            updateScore();
-                            flashElement("answer", "#ff0000", 500, "transparent");
-                        }
-                        clearInterval(answerTimerInterval);
-                        startNewQuestion();
-                    }
-                }, updateFrequency);
-            }
-
-            function pauseGame() {
-                paused = true;
-                questionElement.textContent = `Paused`;
-                updateAnswerTimerDisplay(0);
-                clearAnswer();
-                answerElement.disabled = true;
-                answerTimeLimitElement.disabled = false;
-                factor1MinElement.disabled = false;
-                factor1MaxElement.disabled = false;
-                factor2MinElement.disabled = false;
-                factor2MaxElement.disabled = false;
-                sessionDurationElement.disabled = false;
-                clearInterval(answerTimerInterval);
-                clearInterval(sessionTimer);
-                pauseResumeButton.textContent = 'Resume';
-            }
-
-            function resumeGame() {
-                paused = false;
-                pauseResumeButton.textContent = 'Pause';
-                answerElement.disabled = false;
-                answerTimeLimitElement.disabled = true;
-                factor1MinElement.disabled = true;
-                factor1MaxElement.disabled = true;
-                factor2MinElement.disabled = true;
-                factor2MaxElement.disabled = true;
-                sessionDurationElement.disabled = true;
-                startNewQuestion();
-            }
-
-            function enterNumber(num) {
-                if (paused) return;
-                answerElement.value += num;
-                checkAnswer();
-            }
-
-            function clearAnswer() {
-                answerElement.value = '';
-            }
-
-            function deleteLast() {
-                answerElement.value = answerElement.value.slice(0, -1);
-            }
-
-            pauseResumeButton.addEventListener('click', function () {
-                paused ? resumeGame() : pauseGame();
-            });
-
-            resetButton.addEventListener('click', function () {
-                reset();
-            });
-
-            function reset() {
-                updateAnswerTimerDisplay(0);
-                clearAnswer();
-                clearScore();
-                pauseGame();
-            }
-
-            function clearScore() {
-                score = 0;
-                totalAsked = 0;
-                updateScore();
-            }
-
-            answerElement.addEventListener('input', function () {
-                checkAnswer();
-            });
-
-            document.querySelectorAll('#number-pad button').forEach(button => {
-                button.addEventListener('click', function () {
-                    const buttonValue = this.textContent;
-                    if (buttonValue === 'C') {
-                        clearAnswer();
-                    } else if (buttonValue === '←') {
-                        deleteLast();
-                    } else {
-                        enterNumber(buttonValue);
-                    }
-                });
-            });
-
-            reset();
-        });
-    </script>
+    <script src="main.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,236 @@
+input[type=number] {
+    appearance: textfield;
+}
+
+html {
+    overflow: hidden;
+    /* overscroll-behavior-x: none */
+}
+
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: auto;
+    position: relative;
+    background-color: #f0f0f0;
+
+    /* background-image: url('bg1.png');
+    background-size: cover;
+    background-repeat: no-repeat; */
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background-color: #fff;
+    margin: 0 auto;
+    /* width: 100%; */
+    max-width: 600px;
+    min-width: 400px;
+    /* height: 100vh; */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    background-color: #333;
+    color: white;
+    max-height: 80px;
+    /* border-style: outset;
+    border-width: 10px; */
+    /* border-block-end-style: dotted; */
+}
+
+.settings {
+    margin: 0px auto;
+    width: 100%;
+}
+
+.settings-table {
+    width: 100%;
+    margin: 0px auto;
+    border-style: inset;
+    border-width: 10px;
+    border-collapse: collapse;
+}
+
+.settings-table td,
+.settings-table th {
+    border: 1px solid #00000033;
+}
+
+/* .settings-table td:not(:last-child),
+.settings-table th:not(:last-child) {
+    border-right: 1px solid black;
+} */
+
+.settings-table .settings-session-table,
+.settings-table .settings-session-table th,
+.settings-table .settings-session-table td,
+.settings-table .settings-session-table tr {
+    border: none;
+}
+
+.settings-table .settings-session-table {
+    border-collapse: collapse;
+}
+
+.settings-session-table tr td:first-child,
+.settings-session-table tr th:first-child {
+    border-right: 1px solid #00000033;
+}
+
+.settings input {
+    width: 25%;
+}
+
+#score {
+    font-size: 25px;
+    margin: 0px 0px;
+}
+
+#answer-timer {
+    margin: 0 auto;
+    width: 50px;
+    height: 50px;
+    min-width: 50px;
+    min-height: 50px;
+    border-radius: 50%;
+}
+
+#question {
+    font-size: 25px;
+    margin: 0px 0px;
+}
+
+#answer {
+    font-size: 25px;
+    width: 200px;
+    text-align: center;
+    background-color: transparent;
+    border-style: solid;
+    margin: 0px auto;
+}
+
+#answer:focus {
+    caret-color: transparent;
+}
+
+/* Still not perfect. overflow: hidden is necesary to chop a pixel
+or two off some edges. */
+.control-panel-bounds {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    align-items: center;
+    margin: 0 auto;
+    margin-top: 5px;
+    margin-bottom: 40px;
+
+    position: relative;
+    width: 100%;
+    max-width: calc(100% * 2/3);
+    /* border: 1px solid black; */
+
+    overflow: hidden;
+
+    min-width: 0;
+    min-height: 0;
+}
+
+.control-panel {
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    /* border: 1px solid red; */
+    box-sizing: border-box;
+    min-width: 0;
+    min-height: 0;
+
+    border-style: inset;
+    border-width: 10px;
+    border-collapse: collapse;
+}
+
+/* When extremely small we can see it still has > 0 min-width. */
+.numpad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 0px;
+    /* border: 1px solid green; */
+    /* margin: 2px auto; */
+    width: 100%;
+    height: 80%;
+    min-width: 0;
+    min-height: 0;
+}
+
+.numpad button {
+    cursor: pointer;
+    touch-action: manipulation;
+    background-color: #efefef;
+    border-style: unset;
+    min-width: 0;
+    min-height: 0;
+}
+
+.numpad button:hover {
+    background-color: #ccc;
+}
+
+.numpad button:active {
+    background-color: #bbb;
+}
+
+#backspace-arrow {
+    font-size: 26px;
+    line-height: 10px;
+}
+
+.control-flow-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0px;
+    /* border: 1px solid blue; */
+    /* margin: 2px auto; */
+    width: 100%;
+    height: 20%;
+}
+
+.control-flow-buttons button {
+    /* width: 50%; */
+    /* font-size: 16px; */
+    color: white;
+    background-color: #4CAF50;
+    cursor: pointer;
+    touch-action: manipulation;
+    border-style: unset;
+    min-width: 0;
+    min-height: 0;
+}
+
+.control-flow-buttons button:hover {
+    background-color: #459F49;
+}
+
+.control-flow-buttons button:active {
+    background-color: #3E8F41;
+}
+
+.control-flow-buttons button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.answer-section {
+    /* background-image: url('bg1.png');
+    background-size: cover;
+    background-repeat: no-repeat; */
+    /* background-blend-mode: color-burn; */
+}
