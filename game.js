@@ -1,4 +1,4 @@
-import Timer from "./Timer.js";
+import Timer from "./Timer_temp.js";
 import { SessionLength } from "./SessionLength.js";
 
 export default class Game {
