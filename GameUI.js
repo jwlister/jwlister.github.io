@@ -20,18 +20,37 @@ const PAUSE_RESUME = document.getElementById("pause-resume");
 const RESET = document.getElementById("reset");
 const NUMPAD_BUTTONS = document.querySelectorAll(".numpad button");
 
-// Num questions only matches up with session length at 5 FPS or less? Even 5
-// often gives 1 less question than expected.
+// Num questions only matches up with session length at 5 FPS or less? Even 5 often gives 1 less
+// question than expected.
+
+// When the session is in `time` mode, the number of questions asked per session only matches up
+// when FPS is five or less. Even five often gives one less question than expected. For example, if
+// the session duration is 60 seconds, and a new question is asked every four seconds, we would
+// expect exactly 15 questions to be asked per session if we just let it run without answering any
+// of the questions. Instead, 14 questions are being asked in a session.
+
 const FPS = 60;
 const FRAME_TIME_MS = 1000 / FPS;
 
-// TODO: Finish organizing functions, start using SessionLength, and give code a general once-over.
-// TODO: Make layout look good on literally ANY screen size.
-// TODO: Allow user to enter answer regardless of whether the answer box is focused or not?
-// TODO: Add a "settings" button that opens a modal with all the settings?
-// TODO: Make flash durations scale with answer time limit, clamped?
-// TODO: Add some kind of visual indicator at session finish, kinda like answer flashes?
-// TODO: Figure out this weird framerate thing.
+// TO-DO list:
+// 1. Finish organizing functions, start using SessionLength, and give code a general once-over.
+// 2. Make layout look good on literally ANY screen size.
+// 3. Allow user to enter answer regardless of whether the answer box is focused or not?
+// 4. Add a "settings" button that opens a modal with all the settings?
+// 5. Make flash durations scale with answer time limit. Maybe clamped?
+// 6. Add some kind of visual indicator at session finish, kinda like answer flashes?
+// 7. Figure out this weird framerate thing.
+// 8. Add hotkey for pausing (perhaps the space key).
+// 9. Add an option to use the mobile keyboard instead of the numpad.
+// 10. See if it's possible to make the mobile keyboard appear as a numpad instead of a regular
+//     keyboard.
+
+// Current mobile issues:
+// 1. The settings secton is too wide for the screen, so the input boxes cut off their contents.
+// 2. Pressing "Start", or tapping any of the numpad buttons while the session is runnning, causes
+//    the mobile keyboard to appear.
+// 3. Zooming in and then scrolling causes the numpad to resize or even disappear, and it doesn't
+//    always reappear or go back to its proper size even when the zoom level is returned to normal.
 
 export default class GameUI {
     constructor() {
@@ -89,10 +108,10 @@ export default class GameUI {
             });
         });
 
-        // TODO: Only update session length if it's currently in time mode
+        // TODO: Only update session length if it's currently in time mode.
         SESSION_LENGTH_TIME.addEventListener("input", () => this.updateSessionLength());
 
-        // TODO: Only update session length if it's currently in count mode
+        // TODO: Only update session length if it's currently in count mode.
         SESSION_LENGTH_COUNT.addEventListener("input", () => this.updateSessionLength());
 
         ANSWER.addEventListener("input", () => this.sendAnswerIfCorrectLength());
@@ -231,9 +250,8 @@ export default class GameUI {
 
     /* {{{ ********** LOGIC ********** */
 
-    // The only reason we have a main loop (instead of everything being purely
-    // event-driven) is to update the timers, their displays, and the logic that
-    // needs to be executed when they expire.
+    // The only reason we have a main loop (instead of everything being purely event-driven) is to
+    // update the timers, their displays, and the logic that needs to be executed when they expire.
     startGameLoopInterval() {
         this.gameLoopInterval = setInterval(() => this.tick(), FRAME_TIME_MS);
     }
@@ -255,12 +273,12 @@ export default class GameUI {
         }
     }
 
-    // Progress is a number between 0 and 1
+    // Progress is a number on the range [0, 1].
     setSessionTimerDisplay(progress) {
         SESSION_TIMER_DISPLAY.style.width = `${progress * 100}%`;
     }
 
-    // Progress is a number between 0 and 1
+    // Progress is a number on the range [0, 1].
     setAnswerTimerDisplay(progress) {
         let ang = progress * 360;
         ANSWER_TIMER_DISPLAY.style.background = `conic-gradient(#4CAF50 ${ang}deg, #333 ${ang}deg)`;
@@ -285,9 +303,10 @@ export default class GameUI {
     pause() {
         this.game.pause();
 
-        // Comment this out to let `ANSWER_TIMER_DISPLAY` keep its current
-        // progress while paused, or uncomment it to instead reset it. Depends
-        // on preference. I kind of like seeing it stop where it is.
+        // Comment this out to let `ANSWER_TIMER_DISPLAY` keep its current progress while paused, or
+        // uncomment it to instead reset it. Depends on preference. I kind of like seeing it stop
+        // where it is.
+        //
         // this.updateAnswerTimerDisplay(0);
 
         QUESTION.textContent = "Paused";
